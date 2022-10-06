@@ -8,7 +8,7 @@ public class Main {
         {
             InetAddress ip = InetAddress.getByName("robdangero.us");
             //Client c = new Client(ip.getHostAddress(), 80);
-            Client c = new Client("127.0.0.1", 80);
+            Client c = new Client(ip.getHostAddress(), 80);
         }
         catch (IOException e)
         {

@@ -17,6 +17,8 @@ public class Server
     private BufferedReader m_Response = null;
     private PrintWriter m_Request = null;
 
+    private Boolean m_RequestEnd = false;
+
     public Server(int port)
     {
         try
@@ -36,30 +38,41 @@ public class Server
             m_Request = new PrintWriter(m_Socket.getOutputStream(), true);
 
             String line = "";
-
             String endCondition = "close";
-            String responseLine = "";
 
             while(!line.equals(endCondition))
             {
                 try
                 {
-                    String response = "";
-                    responseLine = m_Response.readLine();
-                    //while((response = m_Response.readLine()) != null)
-                    //{
-                        //System.out.println("test1");
-                    //}
-                    //System.out.println("test2");
+                    if(!m_RequestEnd)
+                    {
+                        String currLine = m_Response.readLine();
+                        if(currLine.equals("end"))
+                        {
+                            m_RequestEnd = true;
+                        }
+                        else if (!currLine.equals(""))
+                        {
+                            line += currLine;
+                            if(currLine.contains("HOST:") || currLine.contains("Content-length:"))
+                            {
+                                line += "\r\n\r\n";
+                            }
+                            else
+                            {
+                                line += "\r\n";
+                            }
+                        }
+                    }
+                    else
+                    {
 
-                    System.out.println(responseLine);
-                    System.out.println("test");
-
-                    m_Request.print("yo\r\n");
-                    m_Request.flush();
-
-
-
+                        System.out.print(line);
+                        System.out.print("test");
+                        m_Request.print("yo\r\n");
+                        m_Request.flush();
+                        m_RequestEnd = false;
+                    }
                 }
                 catch (IOException i)
                 {
