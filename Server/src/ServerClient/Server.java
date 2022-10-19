@@ -165,7 +165,9 @@ public class Server
                     String data = scanner.nextLine();
                     m_Request.print(data + "\r\n");
                 }
+                scanner.close();
             }
+
         }
         else
         {
@@ -247,7 +249,6 @@ public class Server
         m_Request.print("DELETE: sert a supprimer un fichier\r\n");
         m_Request.print("CLOSE: sert a ce deconnecter\r\n");
         m_Request.print("le path commence a l'interieur du dossier data\r\n");
-        m_Request.print("pour DELETE un fichier ajouter avec le PUT vous devez vous reconecter avec le serveur pour que ca s'actualise\r\n");
         m_Request.print("end\r\n");
     }
     public String GetPath(String cmd)
