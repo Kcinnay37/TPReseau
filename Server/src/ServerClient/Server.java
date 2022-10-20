@@ -49,7 +49,8 @@ public class Server
                 {
                     line = "";
                     String currLine = "";
-                    while(!(currLine = m_Response.readLine()).equals("end"))
+
+                    while((currLine = m_Response.readLine()) != null && !currLine.equals("end"))
                     {
                         line += currLine;
                         if(currLine.contains("HOST:") || currLine.contains("Content-length:"))
